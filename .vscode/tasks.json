@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile",
+            "command": "g++",
+            "args": [
+                "-g","${workspaceRoot}\\Source\\*.cpp ",   
+                "-o","${workspaceRoot}\\Debug\\${fileBasenameNoExtension}.exe", 
+                "-ggdb3",  
+                "-Wall",    
+                "-static-libgcc",   
+                "-std=c++2a",  
+                "-Wno-format",
+                "-finput-charset=UTF-8",
+                "-fexec-charset=UTF-8",
+                "-fPIE",
+                "-fno-omit-frame-pointer"
+            ],
+   
+            "type": "shell",
+   
+            "presentation": {
+                "echo": true,
+                "reveal": "silent", 
+                "focus": false,
+                "panel": "shared" 
+            },
+   
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative", "\\"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        }
+      ]
+   }

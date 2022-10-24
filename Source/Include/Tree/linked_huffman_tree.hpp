@@ -1,0 +1,3 @@
+#ifndef LINKED_HUFFMAN_TREE
+#define LINKED_HUFFMAN_TREE
+#endif
