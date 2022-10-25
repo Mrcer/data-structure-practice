@@ -1,7 +1,8 @@
 # 数据结构实践
 
 用于学习数据结构和积累大型项目开发经验的个人项目。
-
+github:[https://github.com/Mrcer/data-structure-practice](https://github.com/Mrcer/data-structure-practice)
+gitee:[https://gitee.com/mrcer/data-struct-practice](https://gitee.com/mrcer/data-struct-practice)
 ## 使用方式
 
 该项目目前使用纯C++在VSCode开发，请预先安装好C++运行环境和VSCode，详细配置过程参见GZTime博客（工作目录环境已配置，如有需要请自行更改编译器路径）：  
