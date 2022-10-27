@@ -2,7 +2,7 @@
 #define ARRAY_LIST
 
 #include <cstddef>
-#include "List.hpp"
+#include "list.hpp"
 #define INITIAL_CAPACITY 4
 
 template <typename T>

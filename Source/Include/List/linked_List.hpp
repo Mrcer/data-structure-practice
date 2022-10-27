@@ -1,7 +1,7 @@
 #ifndef LINKED_LIST
 #define LINKED_LIST
 
-#include "List.hpp"
+#include "list.hpp"
 
 template <typename T>
 class LinkedList: public List<T> {
