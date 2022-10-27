@@ -66,7 +66,20 @@ void tree_test() {
 }
 
 void linked_list_test() {
-    LinkedList list;
+    LinkedList<int> list;
+	list.push_back(1);
+	list.push_back(2);
+	list.push_back(3);
+	list.erase(1);
+	list.insert(1, 4);
+	list.insert(0, 5);
+	list.insert(2, 6);
+	cout << list.pop_back() << endl;
+	cout << list.pop_back() << endl;
+}
+
+void array_list_test() {
+    ArrayList<int> list;
 	list.push_back(1);
 	list.push_back(2);
 	list.push_back(3);
@@ -87,4 +100,6 @@ void test_all() {
     array_binary_tree_test();
     cout << "Running LinkedBinaryTree Test" << endl;
     linked_binary_tree_test();
+    cout << "Running ArrayList Test" << endl;
+    array_list_test();
 }

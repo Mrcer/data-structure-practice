@@ -16,20 +16,21 @@ gitee:[https://gitee.com/mrcer/data-struct-practice](https://gitee.com/mrcer/dat
 
 ## 已实现的数据结构或算法
 
-1. `LinkedList`：链表实现的线性表
+1. `LinkedList<T>`：链表实现的线性表
 2. `Tree<T>`：基于`std::vector`实现的一般的树
 3. `LinkedBinaryTree<T>`：链表实现的二叉树
 4. `ArrayBinaryTree<T>`：基于`std::vector`实现的二叉树
+5. `ArrayList<T>`: 数组实现的线性表
 
 ## 待办事项
 
 ### 已知Bug
-1. 目前无法多次引用`include.h`，因为有非模板实现`LinkedList`，这会在下次项目重构中修复
 
 ### 待实现功能
 1. 哈夫曼树
-2. ArrayList
-3. 树的序列化和反序列化
+2. 树的序列化和反序列化
+3. 哈希表
+4. 图
 
 ### 项目相关
 1. 使用cmake构建项目

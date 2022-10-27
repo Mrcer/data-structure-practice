@@ -1,109 +1,124 @@
 #ifndef LINKED_LIST
 #define LINKED_LIST
 
-struct _LLNode {
-	_LLNode(_LLNode * next = nullptr, _LLNode * prev = nullptr, int n = 0) : next(next), prev(prev), data(n) { }
-	
-	_LLNode * next;
-	_LLNode * prev;
-	int data;
-};
+#include "List.hpp"
 
-class LinkedList {
+template <typename T>
+class LinkedList: public List<T> {
 public:
-	LinkedList(int _size = 0);
-	int at(int index);
-	int find(int n);
-	bool empty();
-	
-	bool push_back(int n);
-	int pop_back();
-	bool insert(int index, int n);
-	bool erase(int index);
-	bool clear();
+	LinkedList(size_t _size = 0);
+	virtual T& at(const size_t index) override;
+	virtual size_t find(const T &n) const override;
+    virtual size_t size() const override;
+	virtual bool empty() const override;
 
-	~LinkedList();
+	virtual bool push_back(const T &n) override;
+	virtual T pop_back() override;
+	virtual bool insert(const size_t index, const T &n) override;
+	bool erase(const size_t index);
+	virtual bool erase(const size_t index, const size_t length) override;
+	virtual bool clear() override;
+	virtual ~LinkedList();
 private:
-	_LLNode * head;
-	_LLNode * tail;
-	int size;
+	struct _LLNode {
+		_LLNode(_LLNode * next = nullptr, _LLNode * prev = nullptr, T n = T()) : next(next), prev(prev), data(n) { }
+		
+		_LLNode * next;
+		_LLNode * prev;
+		T data;
+	};
+	_LLNode * _head;
+	_LLNode * _tail;
+	size_t _size;
 };
 
-LinkedList::LinkedList(int _size) : head(nullptr), tail(nullptr), size(0) {
-	for(int i = 0 ; i < _size ; i++)
-		push_back(0);
+template <typename T>
+LinkedList<T>::LinkedList(size_t _size) : _head(nullptr), _tail(nullptr), _size(0) {
+	for(size_t i = 0 ; i < _size ; i++)
+		push_back(T());
 }
 
-int LinkedList::at(int index) {
-	if(index < 0 or index >= size)
-		return -1;
-	_LLNode * p = head;
-	for(int i = 0 ; i < index ; i++)
+template <typename T>
+T& LinkedList<T>::at(size_t index) {
+	if(index < 0 or index >= _size)
+		throw "Out of bound!";
+	_LLNode * p = _head;
+	for(size_t i = 0 ; i < index ; i++)
 		p = p->next;
 	return p->data;
 }
 
-int LinkedList::find(int n) {
-	_LLNode * p = head;
-	for(int i = 0 ; i < size ; i++) {
+template <typename T>
+size_t LinkedList<T>::find(const T &n) const {
+	_LLNode * p = _head;
+	for(size_t i = 0 ; i < _size ; i++) {
 		if(p->data == n) {
 			return i;
 		}
 	}
-	return -1;
+	return _size;
 }
 
-inline bool LinkedList::empty() {
-	return size == 0;
+template <typename T>
+inline size_t LinkedList<T>::size() const {
+	return _size;
 }
 
-bool LinkedList::push_back(int n) {
-	if(size == 0) {
-		head = tail = new _LLNode(nullptr, nullptr, n);
-		size = 1;
+template <typename T>
+inline bool LinkedList<T>::empty() const {
+	return _size == 0;
+}
+
+template <typename T>
+bool LinkedList<T>::push_back(const T &n) {
+	if(_size == 0) {
+		_head = _tail = new _LLNode(nullptr, nullptr, n);
+		_size = 1;
 	} else {
-		tail->next = new _LLNode(nullptr, tail, n);
-		tail = tail->next;
-		size++;
+		_tail->next = new _LLNode(nullptr, _tail, n);
+		_tail = _tail->next;
+		_size++;
 	}
 	return true;
 }
 
-int LinkedList::pop_back() {
-	if(size == 0) {
-		return -1;
-	} else if(size == 1){
-		size = 0;
-		int res = tail->data;
-		delete tail;
-		head = tail = nullptr;
+template <typename T>
+T LinkedList<T>::pop_back() {
+	if(_size == 0) {
+		throw "Out of bound!";
+	} else if(_size == 1){
+		_size = 0;
+		T res = _tail->data;
+		delete _tail;
+		_head = _tail = nullptr;
 		return res;
 	} else {
-		size--;
-		int res = tail->data;
-		_LLNode * prev_node = tail->prev;
-		delete tail;
-		tail = prev_node;
-		tail->next = nullptr;
+		_size--;
+		T res = _tail->data;
+		_LLNode * prev_node = _tail->prev;
+		delete _tail;
+		_tail = prev_node;
+		_tail->next = nullptr;
 		return res;
 	}
 }
 
-bool LinkedList::insert(int index, int n) {
-	if(index < 0 or index > size)
+template <typename T>
+bool LinkedList<T>::insert(size_t index, const T &n) {
+	if(index < 0 or index > _size)
 		return false;
 	// Draw a table, columns with empty and non-empty
 	// raws with zreo index and non-zero index and tail index.
 	if(index == 0) {
-		_LLNode * new_node = new _LLNode(head, nullptr, n);
-		head->prev = new_node;
-		head = new_node;
-		size++;
-	} else if(index == size) {
+		_LLNode * new_node = new _LLNode(_head, nullptr, n);
+		_head->prev = new_node;
+		_head = new_node;
+		_size++;
+	} else if(index == _size) {
 		push_back(n);
 	} else {
-		_LLNode * old_node = head;
-		for(int i = 0 ; i < index ; i++) {
+		_LLNode * old_node = _head;
+		for(size_t i = 0 ; i < index ; i++) {
 			old_node = old_node->next;
 		}
 		// better to store these nodes!
@@ -115,27 +130,27 @@ bool LinkedList::insert(int index, int n) {
 		new_node->next = old_node;
 		old_node->prev = new_node;
 		old_prev->next = new_node;
-		size++;
+		_size++;
 	}
 	return true;
 }
 
-
-bool LinkedList::erase(int index) {
-	if(index < 0 or index >= size) return false;
+template <typename T>
+bool LinkedList<T>::erase(const size_t index) {
+	if(index < 0 or index >= _size) return false;
 	if(index == 0) {
-		head = head->next;
-		delete head->prev;
-		head->prev = nullptr;
-	} else if(index == size - 1) {
-		tail = tail->prev;
-		delete tail->next;
-		tail->next = nullptr;
+		_head = _head->next;
+		delete _head->prev;
+		_head->prev = nullptr;
+	} else if(index == _size - 1) {
+		_tail = _tail->prev;
+		delete _tail->next;
+		_tail->next = nullptr;
 	} else {
-		_LLNode * cur_node = head;
+		_LLNode * cur_node = _head;
 		_LLNode * prev_node;
 		_LLNode * next_node;
-		for(int i = 0 ; i < index ; i++) {
+		for(size_t i = 0 ; i < index ; i++) {
 			cur_node = cur_node->next;
 		}
 		prev_node = cur_node->prev;
@@ -144,13 +159,26 @@ bool LinkedList::erase(int index) {
 		next_node->prev = prev_node;
 		delete cur_node;
 	}
-	size--;
+	_size--;
 	return true;
 }
 
-bool LinkedList::clear() {
-	_LLNode * cur_node = head;
-	_LLNode * old;	
+template <typename T>
+bool LinkedList<T>::erase(const size_t index, const size_t length) {
+	if(index + length > _size) {
+		return false;
+	} else {
+		for(size_t i = 0 ; i < length ; ++i) {
+			erase(index);
+		}
+		return true;
+	}
+}
+
+template <typename T>
+bool LinkedList<T>::clear() {
+	_LLNode * cur_node = _head;
+	_LLNode * old;
 	while(cur_node != nullptr) {
 		old = cur_node;
 		cur_node = cur_node->next;
@@ -160,7 +188,8 @@ bool LinkedList::clear() {
 }
 
 
-LinkedList::~LinkedList() {
+template <typename T>
+LinkedList<T>::~LinkedList() {
 	clear();
 }
 
