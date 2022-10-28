@@ -36,8 +36,12 @@ public:
 
         virtual T& get() = 0;
         virtual bool remove() = 0;
+        virtual bool set(const T& n) = 0;
         virtual bool set_left(const T& n) = 0;
         virtual bool set_right(const T& n) = 0;
+        bool set(const std::shared_ptr<BinaryTree<T>> bt);
+        bool set_left(const std::shared_ptr<BinaryTree<T>> bt);
+        bool set_right(const std::shared_ptr<BinaryTree<T>> bt);
     protected:
         Query() { };
         bool invalid = false;
@@ -144,6 +148,43 @@ bool BinaryTree<T>::Query::is_right() const{
         std::unique_ptr<Query> p = parent();
         return p->has_right() && p->right() == *this;
     }
+}
+
+template <typename T>
+bool BinaryTree<T>::Query::set(const std::shared_ptr<BinaryTree<T>> bt) {
+    auto query = bt->query();
+    if(! this->set(query->get())) return false;
+    if(query->has_left()) {
+        if(! this->set_left(query->left()->get()))
+            return false;
+    } else {
+        if(this->has_left()) this->left()->remove();
+    }
+    if(query->has_right()) {
+        if(! this->set_right(query->right()->get()))
+            return false;
+    } else {
+        if(this->has_right()) this->right()->remove();
+    }
+    return true;
+}
+
+template <typename T>
+bool BinaryTree<T>::Query::set_left(const std::shared_ptr<BinaryTree<T>> bt) {
+    if(!has_left()) {
+        if(!set_left(T()))
+            return false;
+    }
+    return this->left()->set(bt);
+}
+
+template <typename T>
+bool BinaryTree<T>::Query::set_right(const std::shared_ptr<BinaryTree<T>> bt) {
+    if(!has_right()) {
+        if(!set_right(T()))
+            return false;
+    }
+    return this->right()->set(bt);
 }
 
 #endif

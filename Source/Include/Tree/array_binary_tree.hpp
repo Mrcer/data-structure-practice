@@ -32,6 +32,7 @@ public:
 
         virtual T& get() override;
         virtual bool remove() override;
+        virtual bool set(const T& n) override;
         virtual bool set_left(const T& n) override;
         virtual bool set_right(const T& n) override;
     protected:
@@ -56,6 +57,7 @@ protected:
         Node &operator=(const Node &node) {
             data = node.data;
             occupied = node.occupied;
+            return *this;
         }
         T& get() {
             return data;
@@ -159,6 +161,12 @@ template <typename T>
 T& ArrayBinaryTree<T>::Query::get() {
     if(this->invalid) throw "Invalid Query!";
     return data->at(index).get();
+}
+
+template <typename T>
+bool ArrayBinaryTree<T>::Query::set(const T& n) {
+    get() = n;
+    return true;
 }
 
 template <typename T>

@@ -38,6 +38,7 @@ public:
 
         virtual T& get() override;
         virtual bool remove() override;
+        virtual bool set(const T& n) override;
         virtual bool set_left(const T& n) override;
         virtual bool set_right(const T& n) override;
     protected:
@@ -143,6 +144,12 @@ bool LinkedBinaryTree<T>::Query::remove() {
     if(has_left()) left()->remove();
     if(has_right()) right()->remove();
     delete sub_tree;
+    return true;
+}
+
+template <typename T>
+bool LinkedBinaryTree<T>::Query::set(const T& n) {
+    get() = n;
     return true;
 }
 
