@@ -49,5 +49,8 @@
         "typeinfo": "cpp",
         "stdio.h": "c",
         "sstream": "cpp"
-    }
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceRoot}\\\\Source\\\\Include"
+    ]
 }

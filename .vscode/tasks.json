@@ -6,7 +6,8 @@
             "command": "g++",
             "args": [
                 "-g","${workspaceRoot}\\Source\\*.cpp ",   
-                "-o","${workspaceRoot}\\Debug\\${fileBasenameNoExtension}.exe", 
+                "-o","${workspaceRoot}\\Debug\\debug.exe",
+                "-I", "${workspaceRoot}\\Source\\Include",
                 "-ggdb3",  
                 "-Wall",    
                 "-static-libgcc",   
