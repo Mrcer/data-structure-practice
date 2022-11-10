@@ -1,6 +1,7 @@
 #ifndef LINKED_LIST
 #define LINKED_LIST
 
+#include <iostream>
 #include "list.hpp"
 
 template <typename T>
@@ -18,6 +19,7 @@ public:
 	bool erase(const size_t index);
 	virtual bool erase(const size_t index, const size_t length) override;
 	virtual bool clear() override;
+	virtual void print() override;
 	virtual ~LinkedList();
 private:
 	struct _LLNode {
@@ -187,6 +189,16 @@ bool LinkedList<T>::clear() {
 	return true;
 }
 
+template <typename T>
+void LinkedList<T>::print() {
+	_LLNode *cur = _head;
+	int cnt = 0;
+	while(cur != nullptr) {
+		std::cout << cnt << ": " << cur->data << std::endl;
+		cnt++;
+		cur = cur->next;
+	}
+}
 
 template <typename T>
 LinkedList<T>::~LinkedList() {

@@ -19,6 +19,7 @@ public:
 	virtual bool insert(const size_t index, const T &n) = 0;
 	virtual bool erase(const size_t index, const size_t length) = 0;
 	virtual bool clear() = 0;
+    virtual void print() = 0;
 	virtual ~List() = default;
 };
 

@@ -2,7 +2,9 @@
 #define ARRAY_LIST
 
 #include <cstddef>
+#include <iostream>
 #include "list.hpp"
+
 #define INITIAL_CAPACITY 4
 
 template <typename T>
@@ -18,13 +20,15 @@ public:
     virtual size_t size() const override;
 	virtual bool empty() const override;
 	T& operator[](const size_t index);
+    const T& operator[](const size_t index) const;
 
 	virtual bool push_back(const T &n) override;
 	virtual T pop_back() override;
 	virtual bool insert(const size_t index, const T &n) override;
 	virtual bool erase(const size_t index, const size_t length=1) override;
 	virtual bool clear() override;
-
+    virtual void print() override;
+    
 	virtual ~ArrayList();
 private:
     void grow();
@@ -37,7 +41,7 @@ template <typename T>
 ArrayList<T>::ArrayList(): _data(new T[INITIAL_CAPACITY]), _size(0), _capacity(INITIAL_CAPACITY) { }
 
 template <typename T>
-ArrayList<T>::ArrayList(const ArrayList<T> &list) {
+ArrayList<T>::ArrayList(const ArrayList<T> &list): _data(new T[INITIAL_CAPACITY]), _size(0), _capacity(INITIAL_CAPACITY) {
     for(size_t i = 0 ; i < list._size ; ++i) {
         push_back(list[i]);
     }
@@ -96,7 +100,12 @@ bool ArrayList<T>::empty() const {
 
 template <typename T>
 T& ArrayList<T>::operator[](const size_t index) {
-    return at(index);
+    return _data[index];
+}
+
+template <typename T>
+const T& ArrayList<T>::operator[](const size_t index) const {
+    return _data[index];
 }
 
 template <typename T>
@@ -138,6 +147,13 @@ template <typename T>
 bool ArrayList<T>::clear() {
     _size = 0;
     return true;
+}
+
+template <typename T>
+void ArrayList<T>::print() {
+    for(size_t i = 0 ; i < _size ; ++i) {
+        std::cout << i << ": " << _data[i] << std::endl;
+    }
 }
 
 template <typename T>
