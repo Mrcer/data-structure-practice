@@ -39,9 +39,9 @@ public:
         virtual bool set(const T& n) = 0;
         virtual bool set_left(const T& n) = 0;
         virtual bool set_right(const T& n) = 0;
-        bool set(const std::shared_ptr<BinaryTree<T>> bt);
-        bool set_left(const std::shared_ptr<BinaryTree<T>> bt);
-        bool set_right(const std::shared_ptr<BinaryTree<T>> bt);
+        bool set(const std::shared_ptr<Query> other);
+        bool set_left(const std::shared_ptr<Query> other);
+        bool set_right(const std::shared_ptr<Query> other);
     protected:
         Query() { };
         bool invalid = false;
@@ -151,17 +151,16 @@ bool BinaryTree<T>::Query::is_right() const{
 }
 
 template <typename T>
-bool BinaryTree<T>::Query::set(const std::shared_ptr<BinaryTree<T>> bt) {
-    auto query = bt->query();
-    if(! this->set(query->get())) return false;
-    if(query->has_left()) {
-        if(! this->set_left(query->left()->get()))
+bool BinaryTree<T>::Query::set(const std::shared_ptr<Query> other) {
+    if(! this->set(other->get())) return false;
+    if(other->has_left()) {
+        if(! this->set_left(other->left()))
             return false;
     } else {
         if(this->has_left()) this->left()->remove();
     }
-    if(query->has_right()) {
-        if(! this->set_right(query->right()->get()))
+    if(other->has_right()) {
+        if(! this->set_right(other->right()))
             return false;
     } else {
         if(this->has_right()) this->right()->remove();
@@ -170,21 +169,21 @@ bool BinaryTree<T>::Query::set(const std::shared_ptr<BinaryTree<T>> bt) {
 }
 
 template <typename T>
-bool BinaryTree<T>::Query::set_left(const std::shared_ptr<BinaryTree<T>> bt) {
+bool BinaryTree<T>::Query::set_left(const std::shared_ptr<Query> other) {
     if(!has_left()) {
         if(!set_left(T()))
             return false;
     }
-    return this->left()->set(bt);
+    return this->left()->set(other);
 }
 
 template <typename T>
-bool BinaryTree<T>::Query::set_right(const std::shared_ptr<BinaryTree<T>> bt) {
+bool BinaryTree<T>::Query::set_right(const std::shared_ptr<Query> other) {
     if(!has_right()) {
         if(!set_right(T()))
             return false;
     }
-    return this->right()->set(bt);
+    return this->right()->set(other);
 }
 
 #endif

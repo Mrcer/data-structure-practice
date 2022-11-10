@@ -82,12 +82,12 @@ protected:
 };
 
 template <typename T>
-ArrayBinaryTree<T>::ArrayBinaryTree() {
+ArrayBinaryTree<T>::ArrayBinaryTree(): data(0) {
     data.push_back(Node(T()));
 }
 
 template <typename T>
-ArrayBinaryTree<T>::ArrayBinaryTree(const T &n) { 
+ArrayBinaryTree<T>::ArrayBinaryTree(const T &n): data(0) { 
     data.push_back(Node(n));
 }
 
@@ -182,7 +182,7 @@ bool ArrayBinaryTree<T>::Query::remove() {
 template <typename T>
 bool ArrayBinaryTree<T>::Query::set_left(const T& n) {
     if(this->invalid) throw "Invalid Query!";
-    if(!has_left()) data->resize(left_index() + 1);
+    if(!has_left() && left_index() >= data->size()) data->resize(left_index() + 1);
     data->at(left_index()).set(n);
     return true;
 }
@@ -190,9 +190,9 @@ bool ArrayBinaryTree<T>::Query::set_left(const T& n) {
 template <typename T>
 bool ArrayBinaryTree<T>::Query::set_right(const T& n) {
     if(this->invalid) throw "Invalid Query!";
-    if(!has_right()) data->resize(right_index() + 1);
+    if(!has_right() && right_index() >= data->size()) data->resize(right_index() + 1);
     data->at(right_index()).set(n);
-    return false;
+    return true;
 }
 
 template <typename T>
