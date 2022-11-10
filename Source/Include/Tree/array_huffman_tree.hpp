@@ -1,3 +1,0 @@
-#ifndef ARRAY_HUFFMAN_TREE
-#define ARRAY_HUFFMAN_TREE
-#endif

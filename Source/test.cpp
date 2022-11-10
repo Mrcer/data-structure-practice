@@ -91,6 +91,16 @@ void array_list_test() {
 	cout << list.pop_back() << endl;
 }
 
+void huffman_tree_test() {
+        HuffmanTree hf("hello world");
+        cout << "tree:" << endl;
+        hf.print_tree();
+        cout << "code table:" << endl;
+        hf.print_code();
+        cout << hf.encode("hello") << endl;
+        cout << hf.decode(hf.encode("hello")) << endl;
+}
+
 void test_all() {
     cout << "Running LinkedList Test" << endl;
     linked_list_test();
@@ -102,4 +112,6 @@ void test_all() {
     linked_binary_tree_test();
     cout << "Running ArrayList Test" << endl;
     array_list_test();
+    cout << "Running HuffmanTree Test" << endl;
+    huffman_tree_test();
 }

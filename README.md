@@ -21,16 +21,15 @@ gitee:[https://gitee.com/mrcer/data-struct-practice](https://gitee.com/mrcer/dat
 3. `LinkedBinaryTree<T>`：链表实现的二叉树
 4. `ArrayBinaryTree<T>`：基于`std::vector`实现的二叉树
 5. `ArrayList<T>`: 数组实现的线性表
-
+6. `HuffmanTree`: 哈夫曼树
 ## 待办事项
 
 ### 已知Bug
 
 ### 待实现功能
-1. 哈夫曼树
-2. 树的序列化和反序列化
-3. 哈希表
-4. 图
+1. 树的序列化和反序列化
+2. 哈希表
+3. 图
 
 ### 项目相关
 1. 使用cmake构建项目
